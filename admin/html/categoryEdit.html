@@ -1,0 +1,26 @@
+<form id="categoryEdit" ng-submit="save()">
+	<md-input-container>
+		<label>Name</label>
+		<input ng-model="cat.name" ng-disabled="modify" autofocus>
+	</md-input-container>
+
+	<h2 class="md-title">Parents</h2>
+	<md-chips ng-model="cat.parents" md-autocomplete-snap md-require-match="true"
+			md-on-append="appendParent($chip)">
+		<md-autocomplete
+			md-selected-item="selectedParent"
+			md-search-text="parentText"
+			md-items="item in parentSearch(parentText)"
+			md-item-text="item.name"
+			placeholder="Add parent categories">
+			<span md-highlight-text="parentText">{{item.name}}</span>
+		</md-autocomplete>
+	</md-chips>
+
+	<section layout="row" layout-align="end center">
+		<md-button ng-click="delete(); $event.preventDefault()" ng-if="modify"
+				   class="md-raised md-warn">DELETE
+		</md-button>
+		<md-button type="submit" class="md-raised md-primary">SAVE</md-button>
+	</section>
+</form>

@@ -1,0 +1,35 @@
+<section layout="row" layout-align="end center">
+	<md-button class="md-raised md-primary" ui-sref="root.categoryCreate">
+		<md-icon md-svg-icon="add"></md-icon>
+		ADD
+	</md-button>
+</section>
+<md-subheader>모든 카테고리</md-subheader>
+<div ng-repeat="cat in list.root">
+	<md-list-item>
+		<p>{{cat.name}}</p>
+		<md-button class="md-icon-button"
+		           ui-sref="root.categoryEdit({name: cat.name})">
+			<md-icon md-svg-icon="create"></md-icon>
+		</md-button>
+	</md-list-item>
+	<div ng-repeat="cat1 in list[cat.name]">
+		<md-list-item ng-click="disp[cat1.name] = !disp[cat1.name];">
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;{{cat1.name}}</p>
+			<md-button class="md-icon-button"
+			           ui-sref="root.categoryEdit({name: cat1.name})">
+				<md-icon md-svg-icon="create"></md-icon>
+			</md-button>
+		</md-list-item>
+		<div ng-show="disp[cat1.name]">
+			<md-list-item ng-repeat="cat2 in list[cat1.name]">
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cat2.name}}</p>
+				<md-button class="md-icon-button"
+				           ui-sref="root.categoryEdit({name: cat2.name})">
+					<md-icon md-svg-icon="create"></md-icon>
+				</md-button>
+			</md-list-item>
+		</div>
+	</div>
+	<md-divider></md-divider>
+</div>

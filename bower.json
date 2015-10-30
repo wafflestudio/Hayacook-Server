@@ -1,0 +1,21 @@
+{
+  "name": "Hayacook",
+  "version": "0.0.0",
+  "authors": [
+    "Soochan <lsc2687@gmail.com>"
+  ],
+  "license": "None",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-cookies": "~1.4.6",
+    "angular-material": "~0.11.0",
+    "angular-ui-router": "~0.2.15",
+    "material-design-icons": "~2.0.0"
+  }
+}

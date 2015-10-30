@@ -1,0 +1,13 @@
+<md-list>
+	<section layout="row" layout-align="end center">
+		<md-button class="md-raised md-primary" ui-sref="root.recipeEdit">
+			<md-icon md-svg-icon="add"></md-icon>
+			ADD
+		</md-button>
+	</section>
+	<md-list-item ng-repeat="recipe in list" ng-click="edit(recipe)">
+		<p>{{recipe.title}}</p>
+		<md-icon md-svg-icon="create"></md-icon>
+	</md-list-item>
+	<md-divider></md-divider>
+</md-list>

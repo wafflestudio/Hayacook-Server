@@ -1,0 +1,64 @@
+<form id="channelEdit" ng-submit="save()">
+	<md-subheader>General Info</md-subheader>
+	<md-input-container>
+		<label>Title</label>
+		<input ng-model="channel.title">
+	</md-input-container>
+	<md-input-container>
+		<label>Link</label>
+		<input ng-model="channel.link">
+	</md-input-container>
+	<md-input-container>
+		<label>Page Start</label>
+		<input ng-model="channel.pageStart" type="number">
+	</md-input-container>
+	<md-input-container>
+		<label>Page Range</label>
+		<input ng-model="channel.pageRange" type="number">
+	</md-input-container>
+	<md-divider></md-divider>
+
+	<md-subheader>Selectors</md-subheader>
+	<md-input-container>
+		<label>Row</label>
+		<input ng-model="channel.form.row">
+	</md-input-container>
+	<md-input-container>
+		<label>Title</label>
+		<input ng-model="channel.form.title">
+	</md-input-container>
+	<md-input-container>
+		<label>Link</label>
+		<input ng-model="channel.form.link">
+	</md-input-container>
+	<md-input-container>
+		<label>Date</label>
+		<input ng-model="channel.form.date">
+	</md-input-container>
+	<md-input-container>
+		<label>Author</label>
+		<input ng-model="channel.form.author">
+	</md-input-container>
+
+	<md-divider></md-divider>
+
+	<h2 class="md-title">Categories</h2>
+	<md-chips ng-model="channel.category" md-autocomplete-snap md-require-match="true"
+			  md-on-append="appendCategory($chip)">
+		<md-autocomplete
+				md-selected-item="selectedCategory"
+				md-search-text="categoryText"
+				md-items="item in categorySearch(categoryText)"
+				md-item-text="item.name"
+				placeholder="Add categories">
+			<span md-highlight-text="categoryText">{{item.name}}</span>
+		</md-autocomplete>
+	</md-chips>
+
+
+	<section layout="row" layout-align="end center">
+		<md-button ng-click="delete(); $event.preventDefault()" ng-show="channel._id"
+				class="md-raised md-warn">DELETE</md-button>
+		<md-button type="submit" class="md-raised md-primary">SAVE</md-button>
+	</section>
+</form>
