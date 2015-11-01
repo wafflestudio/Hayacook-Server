@@ -1,0 +1,9 @@
+{
+  "app": [
+    {
+      "name": "Hayacook",
+      "script": "server.js",
+      "watch": true
+    }
+  ]
+}
