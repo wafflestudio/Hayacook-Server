@@ -124,6 +124,12 @@ gulp.task('copy', ['less'], function() {
     .src(['./src/main/html/**/*'])
     .pipe(gulp.dest('./dist'))
     .on('error', log);
+
+	// copy documentations
+	gulp
+			.src(['./doc/*'])
+			.pipe(gulp.dest('./dist'))
+			.on('error', log);
 });
 
 /**
