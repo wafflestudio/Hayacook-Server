@@ -23,6 +23,7 @@ app.use('/api', apiRouter);
 app.use('/libs', express.static(path.resolve('libs')));
 app.use('/admin', express.static(path.resolve('admin')));
 app.use('/doc', express.static(path.resolve('swagger-ui/dist')));
+app.use('/doc-files', express.static(path.resolve('doc-files')));
 
 app.use(function (req, res, next) {
 	app.disable('x-powered-by');
