@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 // Recipe
 //router.post('/recipe', auth.verifyAdmin, recipe.create);
 router.get('/recipe', recipe.read);
-router.get('/item/list', item.list);
+//router.get('/item/list', item.list);
 //router.put('/recipe/:id', auth.verifyAdmin, recipe.update);
 //router.delete('/recipe/:id', auth.verifyAdmin, recipe.delete);
 //router.post('/recipe/search', recipe.search);
