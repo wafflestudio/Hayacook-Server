@@ -4,7 +4,7 @@ var router = express.Router();
 var auth = require('../controllers/auth');
 var user = require('../controllers/user');
 var recipe = require('../controllers/recipe');
-//var item = require('../controllers/item');
+var item = require('../controllers/item');
 
 router.get('/', function (req, res) {
 	res.json({message: 'working!'});
@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
 // Recipe
 //router.post('/recipe', auth.verifyAdmin, recipe.create);
 router.get('/recipe', recipe.read);
+router.get('/item/list', item.list);
 //router.put('/recipe/:id', auth.verifyAdmin, recipe.update);
 //router.delete('/recipe/:id', auth.verifyAdmin, recipe.delete);
 //router.post('/recipe/search', recipe.search);
