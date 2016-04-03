@@ -493,11 +493,11 @@
 						"type": "string"
 					}
 				},
-				"image": {
-					"type": "string"
-				},
 				"category": {
-					"type": "string"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				}
 			}
 		},
@@ -521,13 +521,16 @@
 				"essentialItems": {
 					"type": "array",
 					"items": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
+						"type": "string"
 					}
 				},
 				"optionalItems": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"category": {
 					"type": "array",
 					"items": {
 						"type": "string"
