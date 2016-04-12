@@ -31,18 +31,22 @@
 	"paths": {
 		"/item": {
 			"post": {
-				"summary": "Add a new item",
 				"tags": [
 					"item"
+				],
+				"summary": "Add a new item",
+				"description": "",
+				"operationId": "addItem",
+				"produces": [
+					"application/json"
 				],
 				"parameters": [
 					{
 						"in": "body",
-						"name": "item",
-						"description": "'id' is an alphanumeric string used as an internal identifier.<br>'name' is an array of strings. Each string is an alias for this item allowing users to search with the aliases. The first one is used as display name.",
+						"name": "id",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Item"
+							"type": "string"
 						}
 					}
 				],
@@ -50,17 +54,54 @@
 					"200": {
 						"description": "successful operation",
 						"schema": {
-							"$ref": "#/definitions/Item"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Recipe"
+							}
 						}
+					},
+					"default": {
+						"description": "Unexpected error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"item"
+				],
+				"summary": "Delete an item",
+				"description": "",
+				"operationId": "deleteItem",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "successful operation"
 					}
 				}
 			}
 		},
-		"/recipe": {
+		"/recipe/bookmark": {
 			"post": {
-				"summary": "Add a new recipe",
 				"tags": [
 					"recipe"
+				],
+				"summary": "Bookmark a recipe",
+				"description": "",
+				"operationId": "bookmarkRecipe",
+				"produces": [
+					"application/json"
 				],
 				"parameters": [
 					{
@@ -74,273 +115,156 @@
 					}
 				],
 				"responses": {
-					"200": {
-						"description": "successful operation",
-						"schema": {
-							"$ref": "#/definitions/Recipe"
-						}
+					"default": {
+						"description": "successful operation"
 					}
 				}
 			}
 		},
-		"/recipe/{recipeId}": {
-			"put": {
-				"summary": "Modify a recipe",
-				"tags": [
-					"recipe"
-				]
-			},
-			"delete": {
-				"summary": "Delete a recipe",
-				"tags": [
-					"recipe"
-				]
-			}
-		},
-		"/recipe/search": {
-			"post": {
-				"summary": "Find recipes by items",
-				"tags": [
-					"recipe"
-				]
-			}
-		},
-		"/store/order": {
+		"/user/createKakao": {
 			"post": {
 				"tags": [
-					"store"
+					"user"
 				],
-				"summary": "Place an order for a pet",
-				"description": "",
-				"operationId": "placeOrder",
-				"produces": [
-					"application/json",
-					"application/xml"
+				"summary":"Creates Kakao Id",
+				"description":"",
+				"operationId": "createKakao",
+				"produce": [
+					"application/json"
 				],
 				"parameters": [
 					{
+						"name": "code",
 						"in": "body",
-						"name": "body",
-						"description": "order placed for purchasing the pet",
-						"required": false,
-						"schema": {
-							"$ref": "#/definitions/Order"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"schema": {
-							"$ref": "#/definitions/Order"
-						}
-					},
-					"400": {
-						"description": "Invalid Order"
-					}
-				}
-			}
-		},
-		"/store/order/{orderId}": {
-			"get": {
-				"tags": [
-					"store"
-				],
-				"summary": "Find purchase order by ID",
-				"description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",
-				"operationId": "getOrderById",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "orderId",
-						"description": "ID of pet that needs to be fetched",
 						"required": true,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
-					"404": {
-						"description": "Order not found"
-					},
-					"200": {
-						"description": "successful operation",
-						"schema": {
-							"$ref": "#/definitions/Order"
-						}
-					},
-					"400": {
-						"description": "Invalid ID supplied"
+					"default": {
+						"description": "successful operation"
 					}
 				}
-			},
-			"delete": {
+			}
+		},
+		"/user/createLocalId": {
+			"post": {
 				"tags": [
-					"store"
+					"user"
 				],
-				"summary": "Delete purchase order by ID",
-				"description": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
-				"operationId": "deleteOrder",
+				"summary": "Creates Local Id",
+				"description": "",
+				"operationId": "createLocalId",
 				"produces": [
-					"application/json",
-					"application/xml"
+					"application/json"
 				],
 				"parameters": [
 					{
-						"in": "path",
-						"name": "orderId",
-						"description": "ID of the order that needs to be deleted",
+						"in": "body",
+						"name": "id",
 						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"404": {
-						"description": "Order not found"
-					},
-					"400": {
-						"description": "Invalid ID supplied"
-					}
-				}
-			}
-		},
-		"/user": {
-			"post": {
-				"tags": [
-					"user"
-				],
-				"summary": "Create user",
-				"description": "This can only be done by the logged in user.",
-				"operationId": "createUser",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "body",
-						"name": "body",
-						"description": "Created user object",
-						"required": false,
-						"schema": {
-							"$ref": "#/definitions/User"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"description": "successful operation"
-					}
-				}
-			}
-		},
-		"/user/createWithArray": {
-			"post": {
-				"tags": [
-					"user"
-				],
-				"summary": "Creates list of users with given input array",
-				"description": "",
-				"operationId": "createUsersWithArrayInput",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "body",
-						"name": "body",
-						"description": "List of user object",
-						"required": false,
-						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "User"
-							}
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"description": "successful operation"
-					}
-				}
-			}
-		},
-		"/user/createWithList": {
-			"post": {
-				"tags": [
-					"user"
-				],
-				"summary": "Creates list of users with given input array",
-				"description": "",
-				"operationId": "createUsersWithListInput",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "body",
-						"name": "body",
-						"description": "List of user object",
-						"required": false,
-						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/User"
-							}
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"description": "successful operation"
-					}
-				}
-			}
-		},
-		"/user/login": {
-			"get": {
-				"tags": [
-					"user"
-				],
-				"summary": "Logs user into the system",
-				"description": "",
-				"operationId": "loginUser",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "username",
-						"description": "The user name for login",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"in": "query",
-						"name": "password",
-						"description": "The password for login in clear text",
-						"required": false,
-						"type": "string",
-						"format": "password"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "successful operation",
 						"schema": {
 							"type": "string"
 						}
 					},
-					"400": {
-						"description": "Invalid username/password supplied"
+					{
+						"in": "body",
+						"name": "password",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "body",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "successful operation"
+					}
+				}
+			}
+		},
+		"/user/loginKakao": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary":"Login with Kakao Id",
+				"description":"",
+				"operationId": "loginKakao",
+				"produce": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "code",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+								"$ref": "#/definitions/User"
+						}
+					},
+					"default": {
+						"description": "Unexpected error"
+					}
+				}
+			}
+		},
+		"/user/loginLocalId": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary": "Login with Local Id",
+				"description": "",
+				"operationId": "loginLocalId",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "body",
+						"name": "password",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					},
+					"default": {
+						"description": "Unexpected error"
 					}
 				}
 			}
@@ -352,118 +276,13 @@
 				],
 				"summary": "Logs out current logged in user session",
 				"description": "",
-				"operationId": "logoutUser",
+				"operationId": "logout",
 				"produces": [
-					"application/json",
-					"application/xml"
+					"application/json"
 				],
 				"responses": {
 					"default": {
 						"description": "successful operation"
-					}
-				}
-			}
-		},
-		"/user/{username}": {
-			"get": {
-				"tags": [
-					"user"
-				],
-				"summary": "Get user by user name",
-				"description": "",
-				"operationId": "getUserByName",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "username",
-						"description": "The name that needs to be fetched. Use user1 for testing. ",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"404": {
-						"description": "User not found"
-					},
-					"200": {
-						"description": "successful operation",
-						"schema": {
-							"$ref": "#/definitions/User"
-						}
-					},
-					"400": {
-						"description": "Invalid username supplied"
-					}
-				}
-			},
-			"put": {
-				"tags": [
-					"user"
-				],
-				"summary": "Updated user",
-				"description": "This can only be done by the logged in user.",
-				"operationId": "updateUser",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "username",
-						"description": "name that need to be deleted",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"description": "Updated user object",
-						"required": false,
-						"schema": {
-							"$ref": "#/definitions/User"
-						}
-					}
-				],
-				"responses": {
-					"404": {
-						"description": "User not found"
-					},
-					"400": {
-						"description": "Invalid user supplied"
-					}
-				}
-			},
-			"delete": {
-				"tags": [
-					"user"
-				],
-				"summary": "Delete user",
-				"description": "This can only be done by the logged in user.",
-				"operationId": "deleteUser",
-				"produces": [
-					"application/json",
-					"application/xml"
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "username",
-						"description": "The name that needs to be deleted",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"404": {
-						"description": "User not found"
-					},
-					"400": {
-						"description": "Invalid username supplied"
 					}
 				}
 			}
@@ -492,6 +311,9 @@
 					"items": {
 						"type": "string"
 					}
+				},
+				"img": {
+					"type": "string"
 				},
 				"category": {
 					"type": "array",
@@ -541,202 +363,17 @@
 		"User": {
 			"properties": {
 				"id": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "id"
-					}
+					"type": "string"
 				},
 				"username": {
-					"type": "string",
-					"xml": {
-						"name": "username"
-					}
-				},
-				"firstName": {
-					"type": "string",
-					"xml": {
-						"name": "firstName"
-					}
-				},
-				"lastName": {
-					"type": "string",
-					"xml": {
-						"name": "lastName"
-					}
-				},
-				"email": {
-					"type": "string",
-					"xml": {
-						"name": "email"
-					}
+					"type": "string"
 				},
 				"password": {
-					"type": "string",
-					"xml": {
-						"name": "password"
-					}
+					"type": "string"
 				},
-				"phone": {
-					"type": "string",
-					"xml": {
-						"name": "phone"
-					}
-				},
-				"userStatus": {
-					"type": "integer",
-					"format": "int32",
-					"xml": {
-						"name": "userStatus"
-					},
-					"description": "User Status"
+				"email": {
+					"type": "string"
 				}
-			},
-			"xml": {
-				"name": "User"
-			}
-		},
-		"Category": {
-			"properties": {
-				"id": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "id"
-					}
-				},
-				"name": {
-					"type": "string",
-					"xml": {
-						"name": "name"
-					}
-				}
-			},
-			"xml": {
-				"name": "Category"
-			}
-		},
-		"Pet": {
-			"required": [
-				"name",
-				"photoUrls"
-			],
-			"properties": {
-				"id": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "id"
-					}
-				},
-				"category": {
-					"xml": {
-						"name": "category"
-					},
-					"$ref": "Category"
-				},
-				"name": {
-					"type": "string",
-					"example": "doggie",
-					"xml": {
-						"name": "name"
-					}
-				},
-				"photoUrls": {
-					"type": "array",
-					"xml": {
-						"name": "photoUrl",
-						"wrapped": true
-					},
-					"items": {
-						"type": "string"
-					}
-				},
-				"tags": {
-					"type": "array",
-					"xml": {
-						"name": "tag",
-						"wrapped": true
-					},
-					"items": {
-						"$ref": "Tag"
-					}
-				},
-				"status": {
-					"type": "string",
-					"xml": {
-						"name": "status"
-					},
-					"description": "pet status in the store"
-				}
-			},
-			"xml": {
-				"name": "Pet"
-			}
-		},
-		"Tag": {
-			"properties": {
-				"id": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "id"
-					}
-				},
-				"name": {
-					"type": "string",
-					"xml": {
-						"name": "name"
-					}
-				}
-			},
-			"xml": {
-				"name": "Tag"
-			}
-		},
-		"Order": {
-			"properties": {
-				"id": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "id"
-					}
-				},
-				"petId": {
-					"type": "integer",
-					"format": "int64",
-					"xml": {
-						"name": "petId"
-					}
-				},
-				"quantity": {
-					"type": "integer",
-					"format": "int32",
-					"xml": {
-						"name": "quantity"
-					}
-				},
-				"shipDate": {
-					"type": "string",
-					"format": "date-time",
-					"xml": {
-						"name": "shipDate"
-					}
-				},
-				"status": {
-					"type": "string",
-					"xml": {
-						"name": "status"
-					},
-					"description": "Order Status"
-				},
-				"complete": {
-					"type": "boolean"
-				}
-			},
-			"xml": {
-				"name": "Order"
 			}
 		}
 	}
